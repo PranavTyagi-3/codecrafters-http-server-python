@@ -8,6 +8,7 @@ def main():
         data = client.recv(1024).decode()
         req = data.split('\r\n')
         path = req[0].split(" ")[1]
+        print(req)
         if req[0].split(" ")[0] == "GET":
             if path == "/":
                 response = "HTTP/1.1 200 OK\r\n\r\n".encode()  
