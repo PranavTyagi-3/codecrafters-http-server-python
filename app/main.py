@@ -14,7 +14,7 @@ def main():
     if path == "/":
         response = "HTTP/1.1 200 OK\r\n\r\n".encode()  
     elif path.startswith('/echo'):
-        response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: 3\r\n\r\n{path[6:]}".encode()
+        response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {len(path[6:])}\r\n\r\n{path[6:]}".encode()
     else:
         response = "HTTP/1.1 404 Not Found\r\n\r\n".encode()
     client.send(response)
