@@ -19,6 +19,7 @@ def main():
                     if encoding == 'gzip':
                         response = f"HTTP/1.1 200 OK\r\nContent-Encoding: gzip\r\nContent-Type: text/plain\r\nContent-Length: {len(path[6:])}\r\n\r\n{path[6:]}".encode()
                     elif ',' in encoding:
+                        print("IT IS HERE")
                         encoding = encoding.split(",")
                         if 'gzip' in encoding:
                             response = f"HTTP/1.1 200 OK\r\nContent-Encoding: gzip\r\nContent-Type: text/plain\r\nContent-Length: {len(path[6:])}\r\n\r\n{path[6:]}".encode()
