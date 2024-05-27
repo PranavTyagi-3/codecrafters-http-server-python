@@ -1,6 +1,7 @@
 # Uncomment this to pass the first stage
 import socket
 import threading
+import sys
 
 def main():
     def handle_req(client, addr):
@@ -14,6 +15,15 @@ def main():
         elif path.startswith("/user-agent"):
             user_agent = req[2].split(": ")[1]
             response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {len(user_agent)}\r\n\r\n{user_agent}".encode()
+        elif path.startswith("/files"):
+            directory = sys.argv[1]
+            filename = path[7:]
+            try:
+                with open(f"/{directory}/{filename}", "r") as f:
+                    body = f.read()
+                response = f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: {len(body)}\r\n\r\n{body}".encode()
+            except Exception as e:
+                response = f"HTTP/1.1 404 Not Found\r\n\r\n".encode()
         else:
             response = "HTTP/1.1 404 Not Found\r\n\r\n".encode()
         client.send(response)
