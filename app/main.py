@@ -2,6 +2,7 @@
 import socket
 import threading
 import sys
+import gzip
 
 def main():
     def handle_req(client, addr):
@@ -17,11 +18,15 @@ def main():
                     encoding = req[2].split(": ")[1]
                     print(encoding)
                     if encoding == 'gzip':
-                        response = f"HTTP/1.1 200 OK\r\nContent-Encoding: gzip\r\nContent-Type: text/plain\r\nContent-Length: {len(path[6:])}\r\n\r\n{path[6:]}".encode()
+                        content = path[6:]
+                        #Gzip compress the content
+                        content = gzip.compress(content.encode())
+                        response = f"HTTP/1.1 200 OK\r\nContent-Encoding: gzip\r\nContent-Type: text/plain\r\nContent-Length: {len(content)}\r\n\r\n{content}".encode()
                     elif ',' in encoding:
                         encoding = [i.strip() for i in encoding.split(",")]
                         if 'gzip' in encoding:
-                            response = f"HTTP/1.1 200 OK\r\nContent-Encoding: gzip\r\nContent-Type: text/plain\r\nContent-Length: {len(path[6:])}\r\n\r\n{path[6:]}".encode()
+                            content = gzip.compress(content.encode())
+                            response = f"HTTP/1.1 200 OK\r\nContent-Encoding: gzip\r\nContent-Type: text/plain\r\nContent-Length: {len(content)}\r\n\r\n{content}".encode()
                         else:
                             response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {len(path[6:])}\r\n\r\n{path[6:]}".encode()
                     else:
