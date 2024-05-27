@@ -18,6 +18,7 @@ def main():
         elif path.startswith("/files"):
             directory = sys.argv[1]
             filename = path[7:]
+            print(directory, filename)
             try:
                 with open(f"/{directory}/{filename}", "r") as f:
                     body = f.read()
