@@ -15,6 +15,8 @@ def main():
         response = "HTTP/1.1 200 OK\r\n\r\n".encode()  
     elif path.startswith('/echo'):
         response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {len(path[6:])}\r\n\r\n{path[6:]}".encode()
+    elif path.startswith("/user-agent"):
+        print(req)
     else:
         response = "HTTP/1.1 404 Not Found\r\n\r\n".encode()
     client.send(response)
