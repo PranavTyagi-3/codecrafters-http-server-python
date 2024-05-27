@@ -16,7 +16,7 @@ def main():
             user_agent = req[2].split(": ")[1]
             response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {len(user_agent)}\r\n\r\n{user_agent}".encode()
         elif path.startswith("/files"):
-            directory = sys.argv[1]
+            directory = sys.argv[2]
             filename = path[7:]
             print(directory, filename)
             try:
