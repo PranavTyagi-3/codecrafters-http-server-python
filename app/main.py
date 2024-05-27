@@ -21,6 +21,7 @@ def main():
                         content = path[6:]
                         #Gzip compress the content
                         content = gzip.compress(content.encode())
+                        print(content)
                         response = f"HTTP/1.1 200 OK\r\nContent-Encoding: gzip\r\nContent-Type: text/plain\r\nContent-Length: {len(content)}\r\n\r\n{content}".encode()
                     elif ',' in encoding:
                         encoding = [i.strip() for i in encoding.split(",")]
